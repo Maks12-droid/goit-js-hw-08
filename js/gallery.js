@@ -1,3 +1,10 @@
+const galleryLinks = document.querySelectorAll('.gallery-link');
+galleryLinks.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+  });
+});
+
 const images = [
   {
     preview:
@@ -63,3 +70,25 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+const gallery = document.querySelector('.gallery');
+const previewImage = document.querySelector('.gallery-image');
+
+function setAttributes(src, alt) {
+  previewImage.src = src;
+  previewImage.alt = alt;
+}
+
+function onImageClick(event) {
+  const target = event.target;
+
+  if (target.classList.contains('gallery-image')) {
+    const source = target.dataset.source;
+
+    setAttributes(source, target.alt);
+  }
+}
+
+gallery.addEventListener('click', onImageClick);
+
+setAttributes(images[0].preview, images[0].description);
