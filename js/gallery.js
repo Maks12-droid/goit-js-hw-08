@@ -2,6 +2,8 @@ const galleryLinks = document.querySelectorAll('.gallery-link');
 galleryLinks.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
+    const largeImageUrl = link.href;
+    console.log('Посилання на велике зображення:', largeImageUrl);
   });
 });
 
