@@ -83,14 +83,22 @@ function createGalleryItem(image) {
     link.appendChild(img);
     listItem.appendChild(link);
 
-    // Замінено на insertAdjacentHTML
-    gallery.insertAdjacentHTML('beforeend', listItem.outerHTML);
+    return listItem;
 }
 
 function openLightbox(image) {
     const lightbox = basicLightbox.create(`<img src="${image.original}" alt="${image.description}">`);
     lightbox.show();
 }
+
+const galleryFragment = document.createDocumentFragment();
+
+images.forEach(image => {
+    const galleryItem = createGalleryItem(image);
+    galleryFragment.appendChild(galleryItem); 
+});
+
+gallery.appendChild(galleryFragment);
 
 gallery.addEventListener('click', function (event) {
     event.preventDefault();
@@ -102,8 +110,4 @@ gallery.addEventListener('click', function (event) {
             openLightbox(image);
         }
     }
-});
-
-images.forEach(image => {
-    createGalleryItem(image);
 });
