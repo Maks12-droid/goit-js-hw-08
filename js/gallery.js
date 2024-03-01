@@ -1,15 +1,4 @@
-  const galleryLinks = document.querySelectorAll('.gallery-image');
-
-        galleryLinks.forEach(link => {
-            link.addEventListener('click', event => {
-                event.preventDefault();
-                const largeImageUrl = link.dataset.source;
-
-                const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
-                lightbox.show();
-            });
-        });
-
+import * as basicLightbox from 'basiclightbox';
 
 const images = [
   {
@@ -78,23 +67,41 @@ const images = [
 ];
 
 const gallery = document.querySelector('.gallery');
-        const previewImage = document.querySelector('.gallery-image');
 
-        function setAttributes(src, alt) {
-            previewImage.src = src;
-            previewImage.alt = alt;
-        }
+function createGalleryItem(image) {
+  const galleryItem = document.createElement('li');
+  galleryItem.classList.add('gallery-item');
 
-        function onImageClick(event) {
-            const target = event.target;
+  const galleryLink = document.createElement('a');
+  galleryLink.classList.add('gallery-link');
+  galleryLink.href = image.original;
+  galleryLink.download = image.description;
 
-            if (target.classList.contains('gallery-image')) {
-                const source = target.dataset.source;
+  const galleryImage = document.createElement('img');
+  galleryImage.classList.add('gallery-image');
+  galleryImage.src = image.preview;
+  galleryImage.dataset.source = image.original;
+  galleryImage.alt = image.description;
 
-                setAttributes(source, target.alt);
-            }
-        }
+  galleryLink.appendChild(galleryImage);
+  galleryItem.appendChild(galleryLink);
 
-        gallery.addEventListener('click', onImageClick);
+  return galleryItem;
+}
 
-        setAttributes(images[0].preview, images[0].description);
+images.forEach(image => {
+  const galleryItem = createGalleryItem(image);
+  gallery.appendChild(galleryItem);
+});
+
+const galleryLinks = document.querySelectorAll('.gallery-image');
+
+galleryLinks.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    const largeImageUrl = link.dataset.source;
+
+    const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
+    lightbox.show();
+  });
+});
