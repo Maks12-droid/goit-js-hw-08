@@ -64,37 +64,53 @@ const images = [
   },
 ];
 
-const gallery = document.querySelector('.gallery');
+document.addEventListener('DOMContentLoaded', function () {
+    const gallery = document.querySelector('.gallery');
 
-        function createGalleryItem(image) {
-            const listItem = document.createElement('li');
-            listItem.classList.add('gallery-item');
+    if (!gallery) {
+        console.error("Елемент з класом '.gallery' не знайдено.");
+        return; // Зупиняє виконання коду, якщо елемент не знайдено
+    }
 
-            const link = document.createElement('a');
-            link.classList.add('gallery-link');
-            link.href = '#'; 
-            link.onclick = function (event) {
-                event.preventDefault(); 
+    function createGalleryItem(image) {
+        const listItem = document.createElement('li');
+        listItem.classList.add('gallery-item');
 
-                const lightbox = basicLightbox.create(
-                    `<img src="${image.original}" alt="${image.description}">`
-                );
-                lightbox.show();
-            };
+        const link = document.createElement('a');
+        link.classList.add('gallery-link');
+        link.href = '#';
 
-            const img = document.createElement('img');
-            img.classList.add('gallery-image');
-            img.src = image.preview;
-            img.dataset.source = image.original;
-            img.alt = image.description;
+        const img = document.createElement('img');
+        img.classList.add('gallery-image');
+        img.src = image.preview;
+        img.dataset.source = image.original;
+        img.alt = image.description;
 
-            link.appendChild(img);
-            listItem.appendChild(link);
+        link.appendChild(img);
+        listItem.appendChild(link);
 
-            return listItem;
+        return listItem;
+    }
+
+    function openLightbox(image) {
+        const lightbox = basicLightbox.create(`<img src="${image.original}" alt="${image.description}">`);
+        lightbox.show();
+    }
+
+    gallery.addEventListener('click', function (event) {
+        event.preventDefault();
+        const target = event.target;
+
+        if (target.classList.contains('gallery-image')) {
+            const image = images.find(img => img.original === target.dataset.source);
+            if (image) {
+                openLightbox(image);
+            }
         }
+    });
 
-        images.forEach(image => {
-            const galleryItem = createGalleryItem(image);
-            gallery.appendChild(galleryItem);
-        });
+    images.forEach(image => {
+        const galleryItem = createGalleryItem(image);
+        gallery.appendChild(galleryItem);
+    });
+});
