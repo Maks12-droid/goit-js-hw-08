@@ -69,39 +69,52 @@ const images = [
 const gallery = document.querySelector('.gallery');
 
 function createGalleryItem(image) {
-  const galleryItem = document.createElement('li');
-  galleryItem.classList.add('gallery-item');
+    const listItem = document.createElement('li');
+    listItem.classList.add('gallery-item');
 
-  const galleryLink = document.createElement('a');
-  galleryLink.classList.add('gallery-link');
-  galleryLink.href = image.original;
-  galleryLink.download = image.description;
+    const link = document.createElement('a');
+    link.classList.add('gallery-link');
+    link.href = image.original;
+    link.download = image.description;
 
-  const galleryImage = document.createElement('img');
-  galleryImage.classList.add('gallery-image');
-  galleryImage.src = image.preview;
-  galleryImage.dataset.source = image.original;
-  galleryImage.alt = image.description;
+    const img = document.createElement('img');
+    img.classList.add('gallery-image');
+    img.src = image.preview;
+    img.dataset.source = image.original;
+    img.alt = image.description;
 
-  galleryLink.appendChild(galleryImage);
-  galleryItem.appendChild(galleryLink);
+    link.appendChild(img);
+    listItem.appendChild(link);
 
-  return galleryItem;
+    return listItem;
 }
 
-images.forEach(image => {
-  const galleryItem = createGalleryItem(image);
-  gallery.appendChild(galleryItem);
-});
+function setAttributes(src, alt) {
+    const previewImage = document.querySelector('.gallery-image');
+    previewImage.src = src;
+    previewImage.alt = alt;
+}
 
-const galleryLinks = document.querySelectorAll('.gallery-image');
-
-galleryLinks.forEach(link => {
-  link.addEventListener('click', event => {
+function onImageClick(event) {
     event.preventDefault();
-    const largeImageUrl = link.dataset.source;
+    const target = event.target;
 
-    const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
-    lightbox.show();
-  });
+    if (target.classList.contains('gallery-image')) {
+        const source = target.dataset.source;
+        const alt = target.alt;
+
+        setAttributes(source, alt);
+
+        const lightbox = basicLightbox.create(`<img src="${source}" alt="${alt}">`);
+        lightbox.show();
+    }
+}
+
+gallery.addEventListener('click', onImageClick);
+
+images.forEach(image => {
+    const galleryItem = createGalleryItem(image);
+    gallery.appendChild(galleryItem);
 });
+
+setAttributes(images[0].preview, images[0].description);
