@@ -1,3 +1,5 @@
+import * as basicLightbox from 'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.0/dist/basicLightbox.esm.min.js';
+
 const galleryLinks = document.querySelectorAll('.gallery-image');
         galleryLinks.forEach(link => {
           link.addEventListener('click', event => {
