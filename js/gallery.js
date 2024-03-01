@@ -1,14 +1,15 @@
- const galleryLinks = document.querySelectorAll('.gallery-image');
-        galleryLinks.forEach(link => {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            const largeImageUrl = link.dataset.source;
+  const galleryLinks = document.querySelectorAll('.gallery-image');
 
-            // Відкрийте модальне вікно бібліотеки basicLightbox з великим зображенням
-            const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
-            lightbox.show();
-          });
+        galleryLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const largeImageUrl = link.dataset.source;
+
+                const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
+                lightbox.show();
+            });
         });
+
 
 const images = [
   {
@@ -80,18 +81,18 @@ const gallery = document.querySelector('.gallery');
         const previewImage = document.querySelector('.gallery-image');
 
         function setAttributes(src, alt) {
-          previewImage.src = src;
-          previewImage.alt = alt;
+            previewImage.src = src;
+            previewImage.alt = alt;
         }
 
         function onImageClick(event) {
-          const target = event.target;
+            const target = event.target;
 
-          if (target.classList.contains('gallery-image')) {
-            const source = target.dataset.source;
+            if (target.classList.contains('gallery-image')) {
+                const source = target.dataset.source;
 
-            setAttributes(source, target.alt);
-          }
+                setAttributes(source, target.alt);
+            }
         }
 
         gallery.addEventListener('click', onImageClick);
