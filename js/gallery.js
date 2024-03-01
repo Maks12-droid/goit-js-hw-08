@@ -68,38 +68,38 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-function createGalleryItem(image) {
-    const listItem = document.createElement('li');
-    listItem.classList.add('gallery-item');
+    function createGalleryItem(image) {
+      const listItem = document.createElement('li');
+      listItem.classList.add('gallery-item');
 
-    const link = document.createElement('a');
-    link.classList.add('gallery-link');
-    link.href = image.original;
-    link.download = image.description;
+      const link = document.createElement('a');
+      link.classList.add('gallery-link');
+      link.href = image.original;
+      link.download = image.description;
 
-    const img = document.createElement('img');
-    img.classList.add('gallery-image');
-    img.src = image.preview;
-    img.dataset.source = image.original;
-    img.alt = image.description;
+      const img = document.createElement('img');
+      img.classList.add('gallery-image');
+      img.src = image.preview;
+      img.dataset.source = image.original;
+      img.alt = image.description;
 
-    link.appendChild(img);
-    listItem.appendChild(link);
+      link.appendChild(img);
+      listItem.appendChild(link);
 
-    return listItem;
-}
+      return listItem;
+    }
 
-function setAttributes(src, alt) {
-    const previewImage = document.querySelector('.gallery-image');
-    previewImage.src = src;
-    previewImage.alt = alt;
-}
+    function setAttributes(src, alt) {
+      const previewImage = document.querySelector('.gallery-image');
+      previewImage.src = src;
+      previewImage.alt = alt;
+    }
 
-function onImageClick(event) {
-    event.preventDefault();
-    const target = event.target;
+    function onImageClick(event) {
+      event.preventDefault();
+      const target = event.target;
 
-    if (target.classList.contains('gallery-image')) {
+      if (target.classList.contains('gallery-image')) {
         const source = target.dataset.source;
         const alt = target.alt;
 
@@ -107,14 +107,14 @@ function onImageClick(event) {
 
         const lightbox = basicLightbox.create(`<img src="${source}" alt="${alt}">`);
         lightbox.show();
+      }
     }
-}
 
-gallery.addEventListener('click', onImageClick);
+    gallery.addEventListener('click', onImageClick);
 
-images.forEach(image => {
-    const galleryItem = createGalleryItem(image);
-    gallery.appendChild(galleryItem);
-});
+    images.forEach(image => {
+      const galleryItem = createGalleryItem(image);
+      gallery.appendChild(galleryItem);
+    });
 
-setAttributes(images[0].preview, images[0].description);
+    setAttributes(images[0].preview, images[0].description);
