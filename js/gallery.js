@@ -64,7 +64,7 @@ const images = [
   },
 ];
 
- const gallery = document.querySelector('.gallery');
+const gallery = document.querySelector('.gallery');
 
         function createGalleryItem(image) {
             const listItem = document.createElement('li');
@@ -72,8 +72,15 @@ const images = [
 
             const link = document.createElement('a');
             link.classList.add('gallery-link');
-            link.href = image.original;
-            link.download = image.description;
+            link.href = '#'; 
+            link.onclick = function (event) {
+                event.preventDefault(); 
+
+                const lightbox = basicLightbox.create(
+                    `<img src="${image.original}" alt="${image.description}">`
+                );
+                lightbox.show();
+            };
 
             const img = document.createElement('img');
             img.classList.add('gallery-image');
