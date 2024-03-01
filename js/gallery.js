@@ -64,27 +64,30 @@ const images = [
   },
 ];
 
-// ! marking
-const unorderedList = document.querySelector(".gallery");
+ const gallery = document.querySelector('.gallery');
 
-const galleryItems = images
-  .map(
-    (image) => `
-  <li class="gallery-item">
-    <a class="gallery-link" href="${image.original}">
-      <img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}">
-    </a>
-  </li>`
-  )
-  .join("");
+        function createGalleryItem(image) {
+            const listItem = document.createElement('li');
+            listItem.classList.add('gallery-item');
 
-unorderedList.insertAdjacentHTML("beforeend", galleryItems);
+            const link = document.createElement('a');
+            link.classList.add('gallery-link');
+            link.href = image.original;
+            link.download = image.description;
 
-unorderedList.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (e.target.nodeName !== "IMG") return;
+            const img = document.createElement('img');
+            img.classList.add('gallery-image');
+            img.src = image.preview;
+            img.dataset.source = image.original;
+            img.alt = image.description;
 
-  const largeImageUrl = e.target.dataset.source;
+            link.appendChild(img);
+            listItem.appendChild(link);
 
-  basicLightbox.create(`<img src="${largeImageUrl}">`).show();
-});
+            return listItem;
+        }
+
+        images.forEach(image => {
+            const galleryItem = createGalleryItem(image);
+            gallery.appendChild(galleryItem);
+        });
