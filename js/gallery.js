@@ -1,5 +1,16 @@
 import * as basicLightbox from 'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.0/dist/basicLightbox.esm.min.js';
 
+const galleryLinks = document.querySelectorAll('.gallery-image');
+        galleryLinks.forEach(link => {
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            const largeImageUrl = link.dataset.source;
+
+            const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
+            lightbox.show();
+          });
+        });
+
 const images = [
   {
     preview:
