@@ -1,16 +1,5 @@
 import * as basicLightbox from 'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.0/dist/basicLightbox.esm.min.js';
 
-const galleryLinks = document.querySelectorAll('.gallery-image');
-        galleryLinks.forEach(link => {
-          link.addEventListener('click', event => {
-            event.preventDefault();
-            const largeImageUrl = link.dataset.source;
-
-            const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
-            lightbox.show();
-          });
-        });
-
 const images = [
   {
     preview:
@@ -77,26 +66,7 @@ const images = [
   },
 ];
 
-galleryLinks.forEach(link => {
-  link.addEventListener('click', event => {
-    event.preventDefault();
-    const largeImageUrl = link.dataset.source;
-
-    const lightbox = basicLightbox.create(`
-      <div class="modal">
-        <button class="modal-close" data-action="close">X</button>
-        <img src="${largeImageUrl}" alt="Велике зображення" class="modal-image">
-      </div>
-    `);
-
-    lightbox.element().querySelector('[data-action="close"]').addEventListener('click', () => {
-      lightbox.close();
-    });
-
-    lightbox.show();
-  });
-});
-
+const gallery = document.querySelector('.gallery');
 const previewImage = document.querySelector('.gallery-image');
 
 function setAttributes(src, alt) {
@@ -111,10 +81,12 @@ function onImageClick(event) {
     const source = target.dataset.source;
 
     setAttributes(source, target.alt);
+
+    const lightbox = basicLightbox.create(previewImage.outerHTML);
+    lightbox.show();
   }
 }
 
-const gallery = document.querySelector('.gallery');
 gallery.addEventListener('click', onImageClick);
 
 setAttributes(images[0].preview, images[0].description);
