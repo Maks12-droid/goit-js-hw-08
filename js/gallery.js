@@ -1,11 +1,10 @@
-import * as basicLightbox from 'https://cdn.jsdelivr.net/npm/basiclightbox@5.0.0/dist/basicLightbox.esm.min.js';
-
-const galleryLinks = document.querySelectorAll('.gallery-image');
+ const galleryLinks = document.querySelectorAll('.gallery-image');
         galleryLinks.forEach(link => {
           link.addEventListener('click', event => {
             event.preventDefault();
             const largeImageUrl = link.dataset.source;
 
+            // Відкрийте модальне вікно бібліотеки basicLightbox з великим зображенням
             const lightbox = basicLightbox.create(`<img src="${largeImageUrl}" alt="Велике зображення">`);
             lightbox.show();
           });
@@ -78,26 +77,23 @@ const images = [
 ];
 
 const gallery = document.querySelector('.gallery');
-const previewImage = document.querySelector('.gallery-image');
+        const previewImage = document.querySelector('.gallery-image');
 
-function setAttributes(src, alt) {
-  previewImage.src = src;
-  previewImage.alt = alt;
-}
+        function setAttributes(src, alt) {
+          previewImage.src = src;
+          previewImage.alt = alt;
+        }
 
-function onImageClick(event) {
-  const target = event.target;
+        function onImageClick(event) {
+          const target = event.target;
 
-  if (target.classList.contains('gallery-image')) {
-    const source = target.dataset.source;
+          if (target.classList.contains('gallery-image')) {
+            const source = target.dataset.source;
 
-    setAttributes(source, target.alt);
+            setAttributes(source, target.alt);
+          }
+        }
 
-    const lightbox = basicLightbox.create(previewImage.outerHTML);
-    lightbox.show();
-  }
-}
+        gallery.addEventListener('click', onImageClick);
 
-gallery.addEventListener('click', onImageClick);
-
-setAttributes(images[0].preview, images[0].description);
+        setAttributes(images[0].preview, images[0].description);
